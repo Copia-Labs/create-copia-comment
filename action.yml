@@ -1,0 +1,40 @@
+name: 'Create Copia Comment'
+description: 'Create or update a comment on an issue/PR on a Copia instance via the REST API'
+author: 'Copia Automation'
+
+inputs:
+  token:
+    description: 'Personal access token for authentication'
+    required: true
+  owner:
+    description: 'Repository owner (user or organization)'
+    required: true
+  repo:
+    description: 'Repository name'
+    required: true
+  issue_number:
+    description: 'Issue or pull request index'
+    required: true
+  body:
+    description: 'Comment body text'
+    required: true
+  comment_id:
+    description: 'If provided, updates this comment instead of creating a new one'
+    required: false
+    default: ''
+  server_url:
+    description: 'Base URL of the Copia instance (e.g. https://app.copia.io). Defaults to GITHUB_SERVER_URL.'
+    required: false
+    default: ''
+
+outputs:
+  comment_id:
+    description: 'The ID of the created or updated comment'
+  comment_url:
+    description: 'The HTML URL of the comment'
+  json:
+    description: 'The full JSON API response'
+
+runs:
+  using: 'node24'
+  main: 'dist/index.js'
