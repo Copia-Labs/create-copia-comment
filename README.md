@@ -9,9 +9,8 @@ Works on both Copia-hosted and self-hosted runners — only requires the Node.js
 ### Create a Comment
 
 ```yaml
-- uses: Copia-Labs/create-copia-comment@v1
+- uses: Copia-Labs/create-copia-comment@v1.1.0
   with:
-    token: ${{ secrets.COPIA_TOKEN }}
     owner: my-org
     repo: my-project
     issue_number: '42'
@@ -21,9 +20,8 @@ Works on both Copia-hosted and self-hosted runners — only requires the Node.js
 ### Update an Existing Comment
 
 ```yaml
-- uses: Copia-Labs/create-copia-comment@v1
+- uses: Copia-Labs/create-copia-comment@v1.1.0
   with:
-    token: ${{ secrets.COPIA_TOKEN }}
     owner: my-org
     repo: my-project
     issue_number: '42'
@@ -34,11 +32,10 @@ Works on both Copia-hosted and self-hosted runners — only requires the Node.js
 ### Full Example
 
 ```yaml
-- uses: Copia-Labs/create-copia-comment@v1
+- uses: Copia-Labs/create-copia-comment@v1.1.0
   id: comment
   with:
     server_url: https://app.copia.io # optional override
-    token: ${{ secrets.COPIA_TOKEN }}
     owner: my-org
     repo: my-project
     issue_number: '42'
@@ -56,7 +53,6 @@ Works on both Copia-hosted and self-hosted runners — only requires the Node.js
 
 | Name           | Required | Default                    | Description                                                                                            |
 | -------------- | -------- | -------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `token`        | yes      | —                          | Personal access token                                                                                  |
 | `owner`        | yes      | —                          | Repository owner (user or organization)                                                                |
 | `repo`         | yes      | —                          | Repository name                                                                                        |
 | `issue_number` | yes      | —                          | Issue or pull request index                                                                            |
