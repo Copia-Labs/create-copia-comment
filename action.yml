@@ -1,18 +1,18 @@
-name: 'Create Copia Comment'
-description: 'Create or update a comment on an issue/PR on a Copia instance via the REST API'
+name: 'Create Copia Issue Comment'
+description: 'Create or update a comment on an issue via the REST API'
 author: 'Copia Automation'
 
 inputs:
   token:
     default: ${{ github.token }}
   owner:
-    description: 'Repository owner (user or organization)'
+    description: 'Repository organization'
     required: true
   repo:
     description: 'Repository name'
     required: true
   issue_number:
-    description: 'Issue or pull request index'
+    description: 'Issue index'
     required: true
   body:
     description: 'Comment body text'
