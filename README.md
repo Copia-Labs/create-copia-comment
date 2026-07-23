@@ -1,6 +1,6 @@
 # Create Copia Comment
 
-A GitHub Action that creates or updates a comment on an issue/PR on a [Copia](https://app.copia.io) instance via the REST API.
+A GitHub Action that creates or updates a comment on an issue on a [Copia](https://app.copia.io) instance via the REST API.
 
 Works on both Copia-hosted and self-hosted runners — only requires the Node.js runtime.
 
@@ -9,53 +9,63 @@ Works on both Copia-hosted and self-hosted runners — only requires the Node.js
 ### Create a Comment
 
 ```yaml
-- uses: Copia-Labs/create-copia-comment@v1.1.0
-  with:
-    owner: my-org
-    repo: my-project
-    issue_number: '42'
-    body: 'This is an automated comment from CI.'
+permissions:
+  issues: write  # needed if the default permissions are Restricted
+steps:
+  - uses: Copia-Labs/create-copia-comment@v1.1.0
+    with:
+      owner: my-org
+      repo: my-project
+      issue_number: '42'
+      body: 'This is an automated comment from CI.'
+
 ```
 
 ### Update an Existing Comment
 
 ```yaml
-- uses: Copia-Labs/create-copia-comment@v1.1.0
-  with:
-    owner: my-org
-    repo: my-project
-    issue_number: '42'
-    body: 'Updated comment body.'
-    comment_id: '123'
+permissions:
+  issues: write  # needed if the default permissions are Restricted
+steps:
+  - uses: Copia-Labs/create-copia-comment@v1.1.0
+    with:
+      owner: my-org
+      repo: my-project
+      issue_number: '42'
+      body: 'Updated comment body.'
+      comment_id: '123'
 ```
 
 ### Full Example
 
 ```yaml
-- uses: Copia-Labs/create-copia-comment@v1.1.0
-  id: comment
-  with:
-    server_url: https://app.copia.io # optional override
-    owner: my-org
-    repo: my-project
-    issue_number: '42'
-    body: |
-      Automated comment from CI.
+permissions:
+  issues: write  # needed if the default permissions are Restricted
+steps:
+  - uses: Copia-Labs/create-copia-comment@v1.1.0
+    id: comment
+    with:
+      server_url: https://app.copia.io # optional override
+      owner: my-org
+      repo: my-project
+      issue_number: '42'
+      body: |
+        Automated comment from CI.
 
-      Workflow: ${{ github.workflow }}
-      Run: ${{ github.run_id }}
+        Workflow: ${{ github.workflow }}
+        Run: ${{ github.run_id }}
 
-- name: Print comment URL
-  run: echo "Comment URL ${{ steps.comment.outputs.comment_url }}"
+  - name: Print comment URL
+    run: echo "Comment URL ${{ steps.comment.outputs.comment_url }}"
 ```
 
 ## Inputs
 
 | Name           | Required | Default                    | Description                                                                                            |
 | -------------- | -------- | -------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `owner`        | yes      | —                          | Repository owner (user or organization)                                                                |
+| `owner`        | yes      | —                          | Repository organization                                                                                |
 | `repo`         | yes      | —                          | Repository name                                                                                        |
-| `issue_number` | yes      | —                          | Issue or pull request index                                                                            |
+| `issue_number` | yes      | —                          | Issue index                                                                                            |
 | `body`         | yes      | —                          | Comment body text                                                                                      |
 | `comment_id`   | no       | `''`                       | If provided, updates this comment instead of creating a new one                                        |
 | `server_url`   | no       | `<URL of workflow origin>` | Base URL of the Copia instance. Defaults to the URL of the server where the workflow was started from. |
