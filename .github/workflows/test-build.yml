@@ -1,0 +1,47 @@
+name: Build Smoke Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke test dist/index.js
+        # GITHUB_SERVER_URL is normally set by the runner on every job keep it blanked to see the error
+        env:
+          GITHUB_SERVER_URL: ''
+        run: |
+          set +e
+          OUTPUT=$(node dist/index.js 2>&1)
+          EXIT_CODE=$?
+          echo "$OUTPUT"
+
+          EXPECTED="::error::Input required and not supplied: token"
+
+          if echo "$OUTPUT" | grep -qF "$EXPECTED"; then
+            echo "✅ Smoke test passed: bundle loaded and action logic executed correctly."
+            exit 0
+          else
+            echo "❌ Smoke test failed: unexpected output from dist/index.js (bundle may be broken)."
+            echo "Exit code was: $EXIT_CODE"
+            exit 1
+          fi
