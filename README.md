@@ -12,7 +12,7 @@ Works on both Copia-hosted and self-hosted runners — only requires the Node.js
 permissions:
   issues: write  # needed if the default permissions are Restricted
 steps:
-  - uses: Copia-Labs/create-copia-comment@v1.1.0
+  - uses: Copia-Labs/create-copia-comment@v1.2.0
     with:
       owner: my-org
       repo: my-project
@@ -27,7 +27,7 @@ steps:
 permissions:
   issues: write  # needed if the default permissions are Restricted
 steps:
-  - uses: Copia-Labs/create-copia-comment@v1.1.0
+  - uses: Copia-Labs/create-copia-comment@v1.2.0
     with:
       owner: my-org
       repo: my-project
@@ -42,7 +42,7 @@ steps:
 permissions:
   issues: write  # needed if the default permissions are Restricted
 steps:
-  - uses: Copia-Labs/create-copia-comment@v1.1.0
+  - uses: Copia-Labs/create-copia-comment@v1.2.0
     id: comment
     with:
       server_url: https://app.copia.io # optional override
